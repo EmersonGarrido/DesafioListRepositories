@@ -7,6 +7,7 @@ import {
   Animated,
   Dimensions,
   Linking,
+  ActivityIndicator,
 } from 'react-native';
 
 import * as S from './styles';
@@ -18,12 +19,9 @@ interface DetailsProps {
   close: () => void;
 }
 
-const Details: React.FC<DetailsProps> = ({ show, close }) => {
+const Details: React.FC<DetailsProps> = ({show, close}) => {
   const {user, setUser, handleUpdateFavorites, handleRemoveFavorites} =
     useContext(UserContext);
-  const [activeButtonFavorite, setActiveButtonFavorite] = useState(
-    user.details.favorite,
-  );
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),
@@ -79,10 +77,8 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
     setLoading(true);
     if (user.details.favorite) {
       handleRemoveFavorites(user.details);
-      setActiveButtonFavorite(false);
     } else {
       handleUpdateFavorites(user.details);
-      setActiveButtonFavorite(true);
     }
 
     setUser({
@@ -175,7 +171,11 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
             onPress={handleFavorite}
             disabled={loading}>
             <S.TitleButtonFavorite>
-              {user.details.favorite ? 'DESFAVORITAR' : 'FAVORITAR'}
+              {!loading ? (
+                <>{user.details.favorite ? 'DESFAVORITAR' : 'FAVORITAR'}</>
+              ) : (
+                <ActivityIndicator color="#FFF" />
+              )}
             </S.TitleButtonFavorite>
             <IconIonicons name="star" size={20} color="#000" />
           </S.ButtonFavorite>
