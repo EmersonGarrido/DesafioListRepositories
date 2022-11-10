@@ -88,13 +88,21 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
   useEffect(() => {
     const find = favorites.find(item => item.id === user.details.id);
-    console.log('e favorito??', find?.id === user.details.id);
     if (find?.id === user.details.id) {
       setFavorite(true);
     } else {
       setFavorite(false);
     }
   }, []);
+
+  useEffect(() => {
+    const find = favorites.find(item => item.id === user.details.id);
+    if (find?.id === user.details.id) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }, [favorites]);
 
   return (
     <Animated.View
