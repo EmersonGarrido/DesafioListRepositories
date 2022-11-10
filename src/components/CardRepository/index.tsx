@@ -5,6 +5,7 @@ import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as S from './styles';
 
 interface CardRepositoryProps {
+  id: number;
   username: string;
   repository: string;
   description: string;
@@ -12,9 +13,11 @@ interface CardRepositoryProps {
   stargazersCount: number;
   language: string;
   htmlUrl: string;
+  viewButtonFavorite?: boolean;
 }
 
 const CardRepository: React.FC<CardRepositoryProps> = ({
+  id,
   username,
   repository,
   description,
@@ -22,6 +25,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
   stargazersCount,
   language,
   htmlUrl,
+  viewButtonFavorite,
 }) => {
   const { user, setUser, favorites, setFavorites } = useContext(UserContext);
 
@@ -29,6 +33,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
     setUser({
       ...user,
       details: {
+        id,
         username,
         repository,
         avatarUrl,
@@ -72,7 +77,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       <S.FooterCard>
         <S.TouchableOpacity>
           <IconFontAwesome name="star" size={16} color="#FFD02C" />
-          <S.TitleButton>Favoritar</S.TitleButton>
+          <S.TitleButton>{favorites[id] ? 'Desfavoritar' : 'Favoritar'}</S.TitleButton>
         </S.TouchableOpacity>
         <S.BoxFavorite>
           <IconFontAwesome

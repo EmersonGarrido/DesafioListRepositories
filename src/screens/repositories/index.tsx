@@ -39,7 +39,6 @@ const Repositories: React.FC = () => {
   }, [user.username]);
 
   return (
-    <>
       <S.Container>
         {user.loading ? (
         <View style={{
@@ -52,6 +51,7 @@ const Repositories: React.FC = () => {
             data={repositories}
               renderItem={(repository: {
                 item: {
+                  id: number;
                   full_name: string;
                   description: string;
                   owner: {
@@ -64,6 +64,7 @@ const Repositories: React.FC = () => {
               }) => {
               return (
                 <CardRepository
+                  id={repository.item.id}
                   username={repository.item.full_name.split('/')[0]}
                   repository={repository.item.full_name.split('/')[1]}
                   description={repository.item.description}
@@ -77,8 +78,7 @@ const Repositories: React.FC = () => {
             keyExtractor={item => item.id}
           />
         )}
-      </S.Container>
-    </>
+    </S.Container>
   );
 };
 

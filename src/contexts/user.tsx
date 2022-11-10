@@ -16,6 +16,7 @@ interface UserProps {
   username: string;
   loading: boolean;
   details: {
+    id: number;
     username: string;
     repository: string;
     avatarUrl: string;
@@ -54,6 +55,7 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
     loadingSaveModalConfig: false,
     modalDetails: false,
     details: {
+      id: 0,
       username: '',
       repository: '',
       description: '',

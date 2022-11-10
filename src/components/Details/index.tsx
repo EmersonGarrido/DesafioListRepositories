@@ -19,7 +19,8 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ show, close }) => {
-  const {user, setUser} = useContext(UserContext);
+  const { user, favorites, setFavorites } = useContext(UserContext);
+  const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),
     container: new Animated.Value(height),
@@ -70,6 +71,17 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
     await Linking.openURL(user.details.htmlUrl);
   }, [user.details.htmlUrl]);
 
+  function handleFavorite() {
+    setLoading(true);
+    setFavorites({
+      ...favorites,
+      [user.details.id]: {
+        ...user.details,
+      }
+    });
+    setLoading(false);
+  }
+
   useEffect(() => {
     if (show) {
       openModal();
@@ -77,6 +89,10 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
       closeModal();
     }
   }, [show]);
+
+  useEffect(() => {
+    console.log(favorites)
+  }, [favorites])
 
   return (
     <Animated.View
@@ -137,7 +153,7 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
             <IconIonicons name="link" size={20} color="#1976D2" />
           </S.ButtonViewRepository>
 
-          <S.ButtonFavorite>
+          <S.ButtonFavorite onPress={handleFavorite} disabled={loading}>
             <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
             <IconIonicons name="star" size={20} color="#000" />
           </S.ButtonFavorite>
