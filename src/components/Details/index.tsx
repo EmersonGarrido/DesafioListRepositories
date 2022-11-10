@@ -87,11 +87,14 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
   }, [show]);
 
   useEffect(() => {
-    const find = favorites.find((item) => item.id === user.details.id)
-    if (find?.id) {
+    const find = favorites.find(item => item.id === user.details.id);
+    console.log('e favorito??', find?.id === user.details.id);
+    if (find?.id === user.details.id) {
       setFavorite(true);
+    } else {
+      setFavorite(false);
     }
-  }, [])
+  }, []);
 
   return (
     <Animated.View
@@ -158,17 +161,18 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
             <IconIonicons name="link" size={20} color="#1976D2" />
           </S.ButtonViewRepository>
 
-          {!favorite ? (
-            <S.ButtonFavorite onPress={handleFavorite} disabled={loading}>
-              <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
-              <IconIonicons name="star" size={20} color="#000" />
-            </S.ButtonFavorite>
-          ) : (
-            <S.ButtonFavorite onPress={handleFavorite} disabled={loading}>
-              <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
-              <IconIonicons name="star" size={20} color="#000" />
-            </S.ButtonFavorite>
-          )}
+          <S.ButtonFavorite
+            style={{
+              border: favorite ? 0 : 0,
+              backgroundColor: favorite ? '#fff' : '#FFD02C',
+            }}
+            onPress={handleFavorite}
+            disabled={loading}>
+            <S.TitleButtonFavorite>
+              {favorite ? 'DESFAVORITAR' : 'FAVORITAR'}
+            </S.TitleButtonFavorite>
+            <IconIonicons name="star" size={20} color="#000" />
+          </S.ButtonFavorite>
         </S.FooterActions>
       </Animated.View>
     </Animated.View>

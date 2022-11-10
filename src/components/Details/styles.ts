@@ -89,14 +89,14 @@ export const TitleButtonViewRepository = styled.Text`
 `
 
 export const ButtonFavorite = styled.TouchableOpacity`
-  width:100%;
+  width: 100%;
   height: 42px;
   border-radius: 5px;
-  background-color: #FFD02C;
   justify-content: center;
   align-items: center;
   margin-top: 10px;
   flex-direction: row;
+  border-color: black;
 `;
 
 export const TitleButtonFavorite = styled.Text`
