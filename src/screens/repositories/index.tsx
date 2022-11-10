@@ -17,7 +17,6 @@ const Repositories: React.FC = () => {
         method: 'GET',
         url: `https://api.github.com/users/${user.username}/repos`,
       });
-      console.log(response.data);
       if (response.data) {
         setRepositories(response.data);
         setUser({
