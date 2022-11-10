@@ -10,17 +10,10 @@ import * as S from './styles'
 
 const Favorites: React.FC = () => {
   const { user, favorites } = useContext(UserContext);
-  console.log(favorites);
+  console.log("meus favoritos", favorites);
   return (
     <S.Container>
-      {user.loading ? (
-        <View style={{
-          padding: 20,
-        }}>
-          <ActivityIndicator />
-        </View>
-      ) : (
-        <FlatList
+      <FlatList
           data={favorites}
           renderItem={(favorite) => {
             return (
@@ -37,8 +30,7 @@ const Favorites: React.FC = () => {
               />
             );
           }}
-        />
-      )}
+      />
     </S.Container>
   );
 }

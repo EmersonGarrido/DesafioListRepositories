@@ -73,12 +73,12 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
   function handleFavorite() {
     setLoading(true);
-    setFavorites({
+    setFavorites([
       ...favorites,
-      [user.details.id]: {
-        ...user.details,
+      {
+        ...user.details
       }
-    });
+    ]);
     setLoading(false);
   }
 
@@ -91,7 +91,7 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
   }, [show]);
 
   useEffect(() => {
-    console.log(favorites)
+    // console.log(favorites)
   }, [favorites])
 
   return (
