@@ -27,8 +27,15 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
   htmlUrl,
   viewButtonFavorite,
 }) => {
-  const {user, setUser, favorites} = useContext(UserContext);
+  const {
+    user,
+    setUser,
+    favorites,
+    handleUpdateFavorites,
+    handleRemoveFavorites,
+  } = useContext(UserContext);
   const [favorite, setFavorite] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleOpenDetails = () => {
     setUser({
       ...user,
@@ -46,6 +53,36 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       modalDetails: !user.modalDetails,
     });
   };
+
+  function handleFavorite() {
+    setLoading(true);
+
+    const item = {
+      id,
+      username,
+      repository,
+      description,
+      avatarUrl,
+      stargazersCount,
+      language,
+      htmlUrl,
+      favorite: favorite,
+    };
+    if (favorite) {
+      handleRemoveFavorites(item);
+    } else {
+      handleUpdateFavorites(item);
+    }
+
+    setUser({
+      ...user,
+      details: {
+        ...user.details,
+        favorite: !user.details.favorite,
+      },
+    });
+    setLoading(false);
+  }
 
   useEffect(() => {
     const find = favorites.find(item => item.id === id);
@@ -100,6 +137,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       <S.FooterCard>
         {viewButtonFavorite && (
           <S.TouchableOpacity
+            onPress={handleFavorite}
             style={{
               backgroundColor: favorite ? '#fff' : '#FAF3DC',
             }}>
