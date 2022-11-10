@@ -33,7 +33,7 @@ interface UserContextProps {
   user: UserProps;
   setUser: (user: UserProps) => void;
   favorites: Favorite[];
-  setFavorite: (favorite: Favorite) => void;
+  setFavorites: (favorites: Favorite[]) => void;
 }
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
@@ -43,7 +43,7 @@ interface ReactProps {
 }
 
 export const UserProvider: React.FC<ReactProps> = ({children}) => {
-  const [favorites, setFavorite] = useState<Favorite[]>([]);
+  const [favorites, setFavorites] = useState<Favorite[]>([]);
 
   const initialUser: UserProps = {
     username: 'EmersonGarrido',
@@ -68,6 +68,9 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
     <UserContext.Provider
       value={{
         user,
+        setUser,
+        favorites,
+        setFavorites,
       }}>
       {children}
     </UserContext.Provider>
