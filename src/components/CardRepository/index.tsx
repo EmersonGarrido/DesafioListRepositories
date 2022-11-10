@@ -41,6 +41,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
         stargazersCount,
         language,
         htmlUrl,
+        favorite,
       },
       modalDetails: !user.modalDetails,
     });
