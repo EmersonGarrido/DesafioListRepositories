@@ -1,20 +1,18 @@
-import { useEffect, useState, useContext } from 'react';
+import {useContext} from 'react';
 import UserContext from '../../contexts/user';
-import {
-  View,
-  ActivityIndicator,
-} from 'react-native';
-import { FlatList } from 'react-native';
-import { CardRepository } from '../../components';
-import * as S from './styles'
+import {View, Text} from 'react-native';
+import {FlatList} from 'react-native';
+import {CardRepository} from '../../components';
+import * as S from './styles';
 
 const Favorites: React.FC = () => {
-  const { user, favorites } = useContext(UserContext);
+  const {user, favorites} = useContext(UserContext);
   return (
     <S.Container>
-      <FlatList
+      {favorites.length > 0 ? (
+        <FlatList
           data={favorites}
-          renderItem={(favorite) => {
+          renderItem={favorite => {
             return (
               <CardRepository
                 key={favorite.item.id}
@@ -30,9 +28,19 @@ const Favorites: React.FC = () => {
               />
             );
           }}
-      />
+        />
+      ) : (
+        <S.BoxEmptyList>
+          <Text
+            style={{
+              textAlign: 'center',
+            }}>
+            Você ainda não possui uma lista de favoritos
+          </Text>
+        </S.BoxEmptyList>
+      )}
     </S.Container>
   );
-}
+};
 
 export default Favorites;
