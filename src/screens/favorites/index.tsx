@@ -10,7 +10,6 @@ import * as S from './styles'
 
 const Favorites: React.FC = () => {
   const { user, favorites } = useContext(UserContext);
-  console.log("meus favoritos", favorites);
   return (
     <S.Container>
       <FlatList

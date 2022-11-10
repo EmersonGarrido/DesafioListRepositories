@@ -19,6 +19,7 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ show, close }) => {
+  const [favorite, setFavorite] = useState(false);
   const { user, favorites, setFavorites } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
@@ -91,8 +92,11 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
   }, [show]);
 
   useEffect(() => {
-    // console.log(favorites)
-  }, [favorites])
+    const find = favorites.find((item) => item.id === user.details.id)
+    if (find?.id) {
+      setFavorite(true);
+    }
+  }, [])
 
   return (
     <Animated.View
@@ -153,10 +157,13 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
             <IconIonicons name="link" size={20} color="#1976D2" />
           </S.ButtonViewRepository>
 
-          <S.ButtonFavorite onPress={handleFavorite} disabled={loading}>
-            <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
-            <IconIonicons name="star" size={20} color="#000" />
-          </S.ButtonFavorite>
+          {!favorite ? (
+            <S.ButtonFavorite onPress={handleFavorite} disabled={loading}>
+              <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
+              <IconIonicons name="star" size={20} color="#000" />
+            </S.ButtonFavorite>
+          ) : (<></>)}
+
         </S.FooterActions>
       </Animated.View>
     </Animated.View>

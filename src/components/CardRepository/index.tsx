@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import UserContext from '../../contexts/user'
 import {Image, View} from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -28,7 +28,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
   viewButtonFavorite,
 }) => {
   const { user, setUser, favorites, setFavorites } = useContext(UserContext);
-
+  const [favorite, setFavorite] = useState(false);
   const handleOpenDetails = () => {
     setUser({
       ...user,
@@ -45,6 +45,13 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       modalDetails: !user.modalDetails,
     })
   };
+
+  useEffect(() => {
+    const find = favorites.find((item) => item.id === id);
+    if (find) {
+      setFavorite(true);
+    }
+  }, [])
 
   return (
     <S.Container onPress={handleOpenDetails}>
@@ -78,7 +85,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
         {viewButtonFavorite && (
           <S.TouchableOpacity>
           <IconFontAwesome name="star" size={16} color="#FFD02C" />
-          <S.TitleButton>{favorites[id] ? 'Desfavoritar' : 'Favoritar'}</S.TitleButton>
+            <S.TitleButton>{favorite ? 'Desfavoritar' : 'Favoritar'}</S.TitleButton>
         </S.TouchableOpacity>
         )}
 
