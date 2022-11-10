@@ -19,9 +19,11 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ show, close }) => {
-  const {user, favorites, handleUpdateFavorites, handleRemoveFavorites} =
+  const {user, setUser, handleUpdateFavorites, handleRemoveFavorites} =
     useContext(UserContext);
-  const [activeButtonFavorite] = useState(user.details.favorite);
+  const [activeButtonFavorite, setActiveButtonFavorite] = useState(
+    user.details.favorite,
+  );
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),
@@ -77,9 +79,19 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
     setLoading(true);
     if (user.details.favorite) {
       handleRemoveFavorites(user.details);
+      setActiveButtonFavorite(false);
     } else {
       handleUpdateFavorites(user.details);
+      setActiveButtonFavorite(true);
     }
+
+    setUser({
+      ...user,
+      details: {
+        ...user.details,
+        favorite: !user.details.favorite,
+      },
+    });
     setLoading(false);
   }
 
@@ -158,13 +170,12 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
           <S.ButtonFavorite
             style={{
-              border: activeButtonFavorite ? 0 : 0,
-              backgroundColor: activeButtonFavorite ? '#fff' : '#FFD02C',
+              backgroundColor: user.details.favorite ? '#fff' : '#FFD02C',
             }}
             onPress={handleFavorite}
             disabled={loading}>
             <S.TitleButtonFavorite>
-              {activeButtonFavorite ? 'DESFAVORITAR' : 'FAVORITAR'}
+              {user.details.favorite ? 'DESFAVORITAR' : 'FAVORITAR'}
             </S.TitleButtonFavorite>
             <IconIonicons name="star" size={20} color="#000" />
           </S.ButtonFavorite>
