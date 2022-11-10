@@ -1,7 +1,7 @@
 import { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface Favorite {
+interface FavoriteProps {
   id: number;
   username: string;
   repository: string;
@@ -34,8 +34,8 @@ interface UserProps {
 interface UserContextProps {
   user: UserProps;
   setUser: (user: UserProps) => void;
-  favorites: Favorite[];
-  setFavorites: (favorites: Favorite[]) => void;
+  favorites: FavoriteProps[];
+  handleUpdateFavorites: (favorite: FavoriteProps) => void;
 }
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
@@ -45,7 +45,7 @@ interface ReactProps {
 }
 
 export const UserProvider: React.FC<ReactProps> = ({children}) => {
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
+  const [favorites, setFavorites] = useState<FavoriteProps[]>([]);
 
   const initialUser: UserProps = {
     username: 'EmersonGarrido',
@@ -68,17 +68,40 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
 
   const [user, setUser] = useState<UserProps>(initialUser);
 
+  async function handleUpdateFavorites(Favorite: FavoriteProps) {
+    const saveFavorite = [
+      ...favorites,
+      {
+        ...Favorite,
+      },
+    ];
+    setFavorites([...saveFavorite]);
+
+    await AsyncStorage.setItem('@wefit-favorite', JSON.stringify(saveFavorite));
+  }
+
+  async function handleGetFavorites() {
+    const response = await AsyncStorage.getItem('@wefit-favorite');
+    if (response !== null) {
+      setFavorites(JSON.parse(response));
+    }
+  }
+
+  useEffect(() => {
+    handleGetFavorites();
+  }, []);
+
   return (
     <UserContext.Provider
       value={{
         user,
         setUser,
         favorites,
-        setFavorites,
+        handleUpdateFavorites,
       }}>
       {children}
     </UserContext.Provider>
   );
-};
+};;;
 
 export default UserContext;

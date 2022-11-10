@@ -20,7 +20,7 @@ interface DetailsProps {
 
 const Details: React.FC<DetailsProps> = ({ show, close }) => {
   const [favorite, setFavorite] = useState(false);
-  const { user, favorites, setFavorites } = useContext(UserContext);
+  const {user, favorites, handleUpdateFavorites} = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),
@@ -74,12 +74,7 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
   function handleFavorite() {
     setLoading(true);
-    setFavorites([
-      ...favorites,
-      {
-        ...user.details
-      }
-    ]);
+    handleUpdateFavorites(user.details);
     setLoading(false);
   }
 

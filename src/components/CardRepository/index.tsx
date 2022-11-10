@@ -27,7 +27,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
   htmlUrl,
   viewButtonFavorite,
 }) => {
-  const { user, setUser, favorites, setFavorites } = useContext(UserContext);
+  const {user, setUser, favorites} = useContext(UserContext);
   const [favorite, setFavorite] = useState(false);
   const handleOpenDetails = () => {
     setUser({
