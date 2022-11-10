@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import UserContext from '../../contexts/user';
 import {
   View,
@@ -14,8 +14,13 @@ import * as S from './styles';
 
 const {height} = Dimensions.get('window');
 
-const ModalConfig: React.FC = ({show, close}) => {
-  const [text, onChangeText] = React.useState('Nome do usuário');
+interface ModalProps {
+  show: boolean;
+  close: () => void;
+}
+
+const ModalConfig: React.FC<ModalProps> = ({ show, close }) => {
+  const [text, onChangeText] = useState('Nome do usuário');
   const {user, setUser} = useContext(UserContext);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),

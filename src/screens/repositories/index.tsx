@@ -1,12 +1,11 @@
-import React, {useEffect, useState, useContext} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import UserContext from '../../contexts/user';
 import axios from 'axios';
 import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {FlatList} from 'react-native';
-
+import { FlatList } from 'react-native';
 import {CardRepository} from '../../components';
 
 import * as S from './styles';
@@ -51,13 +50,24 @@ const Repositories: React.FC = () => {
         ) : (
           <FlatList
             data={repositories}
-            renderItem={repository => {
+              renderItem={(repository: {
+                item: {
+                  full_name: string;
+                  description: string;
+                  owner: {
+                    avatar_url: string;
+                  };
+                  stargazers_count: number;
+                  language: string;
+                  html_url: string;
+                }
+              }) => {
               return (
                 <CardRepository
                   username={repository.item.full_name.split('/')[0]}
                   repository={repository.item.full_name.split('/')[1]}
                   description={repository.item.description}
-                  owner={repository.item.owner.avatar_url}
+                  avatarUrl={repository.item.owner.avatar_url}
                   stargazersCount={repository.item.stargazers_count}
                   language={repository.item.language}
                   htmlUrl={repository.item.html_url}

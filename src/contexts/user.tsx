@@ -1,11 +1,11 @@
-import React, {createContext, useState, useEffect} from 'react';
+import { createContext, useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface Favorite {
   id: number;
   username: string;
   repository: string;
-  owner: string;
+  avatarUrl: string;
   description: string;
   stargazersCount: number;
   language: string;
@@ -18,13 +18,14 @@ interface UserProps {
   details: {
     username: string;
     repository: string;
-    owner: string;
+    avatarUrl: string;
     description: string;
     stargazersCount: number;
     language: string;
     htmlUrl: string;
   };
   modalConfig: boolean;
+  loadingModalConfig: boolean;
   loadingSaveModalConfig: boolean;
   modalDetails: boolean;
 }
@@ -49,13 +50,14 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
     username: 'EmersonGarrido',
     loading: true,
     modalConfig: false,
+    loadingModalConfig: false,
     loadingSaveModalConfig: false,
     modalDetails: false,
     details: {
       username: '',
       repository: '',
       description: '',
-      owner: '',
+      avatarUrl: '',
       stargazersCount: 0,
       language: '',
       htmlUrl: '',

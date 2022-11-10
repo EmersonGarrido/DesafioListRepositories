@@ -1,15 +1,14 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import UserContext from '../../contexts/user'
 import {Image, View} from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as S from './styles';
 
 interface CardRepositoryProps {
-  fullName: string;
+  username: string;
+  repository: string;
   description: string;
-  owner: {
-    avatarUrl: string;
-  };
+  avatarUrl: string;
   stargazersCount: number;
   language: string;
   htmlUrl: string;
@@ -19,7 +18,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
   username,
   repository,
   description,
-  owner,
+  avatarUrl,
   stargazersCount,
   language,
   htmlUrl,
@@ -32,13 +31,13 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       details: {
         username,
         repository,
-        owner,
+        avatarUrl,
         description,
         stargazersCount,
         language,
         htmlUrl,
       },
-      modalDetails: !user.modelDetails,
+      modalDetails: !user.modalDetails,
     })
   };
 
@@ -55,7 +54,7 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
         </View>
         <Image
           source={{
-            uri: owner,
+            uri: avatarUrl,
           }}
           style={{
             width: 29,

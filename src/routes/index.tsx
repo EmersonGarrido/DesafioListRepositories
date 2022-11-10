@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import UserContext from '../contexts/user';
 import {ModalConfig, Details} from '../components';
 
@@ -27,7 +27,7 @@ const Routes: React.FC = () => {
       modalDetails: status
     })
   }
-  
+
   return (
     <>
       <NavigationContainer>

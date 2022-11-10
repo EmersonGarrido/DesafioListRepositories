@@ -1,21 +1,24 @@
-import React, {useEffect, useState, useContext, useCallback} from 'react';
+import { useEffect, useState, useContext, useCallback } from 'react';
 import UserContext from '../../contexts/user';
 import IconIonicons from 'react-native-vector-icons/Ionicons';
 import {
   View,
-  Text,
   StyleSheet,
   Animated,
   Dimensions,
   Linking,
-  Alert
 } from 'react-native';
 
 import * as S from './styles';
 
 const {height} = Dimensions.get('window');
 
-const Details: React.FC = ({show, close}) => {
+interface DetailsProps {
+  show: boolean;
+  close: () => void;
+}
+
+const Details: React.FC<DetailsProps> = ({ show, close }) => {
   const {user, setUser} = useContext(UserContext);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),

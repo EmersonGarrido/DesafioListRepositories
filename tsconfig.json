@@ -1,3 +1,14 @@
 {
-  "extends": "@tsconfig/react-native/tsconfig.json"
+  "compilerOptions": {
+    "target": "es2015",
+    "module": "es2015",
+    "moduleResolution": "node",
+    "jsx": "react-native",
+    "outDir": "compiled",
+    "rootDir": "src",
+    "types": ["react", "react-native", "jest"],
+    "allowSyntheticDefaultImports": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["android", "ios", "compiled", "node_modules"]
 }
