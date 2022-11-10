@@ -72,6 +72,7 @@ const Repositories: React.FC = () => {
                   stargazersCount={repository.item.stargazers_count}
                   language={repository.item.language}
                   htmlUrl={repository.item.html_url}
+                  viewButtonFavorite
                 />
               );
             }}
