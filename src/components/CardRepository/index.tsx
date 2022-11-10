@@ -75,10 +75,13 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       <S.Description numberOfLines={1} ellipsizeMode='tail'>{description ? description : 'Sem descrição no momento'}</S.Description>
 
       <S.FooterCard>
-        <S.TouchableOpacity>
+        {viewButtonFavorite && (
+          <S.TouchableOpacity>
           <IconFontAwesome name="star" size={16} color="#FFD02C" />
           <S.TitleButton>{favorites[id] ? 'Desfavoritar' : 'Favoritar'}</S.TitleButton>
         </S.TouchableOpacity>
+        )}
+
         <S.BoxFavorite>
           <IconFontAwesome
             name="star"

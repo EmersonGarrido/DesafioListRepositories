@@ -19,8 +19,8 @@ const Favorites: React.FC = () => {
             return (
               <CardRepository
                 id={favorite.item.id}
-                username={favorite.item.username.split('/')[0]}
-                repository={favorite.item.repository.split('/')[1]}
+                username={favorite.item.username}
+                repository={favorite.item.repository}
                 description={favorite.item.description}
                 avatarUrl={favorite.item.avatarUrl}
                 stargazersCount={favorite.item.stargazersCount}
