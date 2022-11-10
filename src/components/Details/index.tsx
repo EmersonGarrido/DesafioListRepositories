@@ -140,7 +140,11 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
               <S.BoxLanguage>
                 <S.ColorLanguage />
-                <S.TextLanguage>{user.details.language ? user.details.language : 'Linguagem Indisponível'}</S.TextLanguage>
+                <S.TextLanguage>
+                  {user.details.language
+                    ? user.details.language
+                    : 'Linguagem Indisponível'}
+                </S.TextLanguage>
               </S.BoxLanguage>
             </S.CardInfos>
           </View>
@@ -148,7 +152,9 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
         <S.FooterActions>
           <S.ButtonViewRepository onPress={handlePress}>
-            <S.TitleButtonViewRepository>VER REPOSITÓRIO</S.TitleButtonViewRepository>
+            <S.TitleButtonViewRepository>
+              VER REPOSITÓRIO
+            </S.TitleButtonViewRepository>
             <IconIonicons name="link" size={20} color="#1976D2" />
           </S.ButtonViewRepository>
 
@@ -157,8 +163,12 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
               <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
               <IconIonicons name="star" size={20} color="#000" />
             </S.ButtonFavorite>
-          ) : (<></>)}
-
+          ) : (
+            <S.ButtonFavorite onPress={handleFavorite} disabled={loading}>
+              <S.TitleButtonFavorite>FAVORITAR</S.TitleButtonFavorite>
+              <IconIonicons name="star" size={20} color="#000" />
+            </S.ButtonFavorite>
+          )}
         </S.FooterActions>
       </Animated.View>
     </Animated.View>
