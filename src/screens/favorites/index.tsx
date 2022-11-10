@@ -17,6 +17,7 @@ const Favorites: React.FC = () => {
           renderItem={(favorite) => {
             return (
               <CardRepository
+                key={favorite.item.id}
                 id={favorite.item.id}
                 username={favorite.item.username}
                 repository={favorite.item.repository}

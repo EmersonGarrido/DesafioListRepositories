@@ -1,5 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
-import UserContext from '../../contexts/user'
+import {useContext, useEffect, useState} from 'react';
+import UserContext from '../../contexts/user';
 import {Image, View} from 'react-native';
 import IconFontAwesome from 'react-native-vector-icons/FontAwesome';
 import * as S from './styles';
@@ -43,15 +43,26 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
         htmlUrl,
       },
       modalDetails: !user.modalDetails,
-    })
+    });
   };
 
   useEffect(() => {
-    const find = favorites.find((item) => item.id === id);
+    const find = favorites.find(item => item.id === id);
     if (find) {
       setFavorite(true);
+    } else {
+      setFavorite(false);
     }
-  }, [])
+  }, []);
+
+  useEffect(() => {
+    const find = favorites.find(item => item.id === id);
+    if (find) {
+      setFavorite(true);
+    } else {
+      setFavorite(false);
+    }
+  }, [favorites]);
 
   return (
     <S.Container onPress={handleOpenDetails}>
@@ -62,7 +73,9 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
             alignItems: 'center',
           }}>
           <S.Username>{username}</S.Username>
-          <S.Repository numberOfLines={1} ellipsizeMode='tail'>/{repository}</S.Repository>
+          <S.Repository numberOfLines={1} ellipsizeMode="tail">
+            /{repository}
+          </S.Repository>
         </View>
         <Image
           source={{
@@ -79,14 +92,28 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
       </S.HeaderCard>
       <S.Line />
 
-      <S.Description numberOfLines={1} ellipsizeMode='tail'>{description ? description : 'Sem descrição no momento'}</S.Description>
+      <S.Description numberOfLines={1} ellipsizeMode="tail">
+        {description ? description : 'Sem descrição no momento'}
+      </S.Description>
 
       <S.FooterCard>
         {viewButtonFavorite && (
-          <S.TouchableOpacity>
-          <IconFontAwesome name="star" size={16} color="#FFD02C" />
-            <S.TitleButton>{favorite ? 'Desfavoritar' : 'Favoritar'}</S.TitleButton>
-        </S.TouchableOpacity>
+          <S.TouchableOpacity
+            style={{
+              backgroundColor: favorite ? '#fff' : '#FAF3DC',
+            }}>
+            <IconFontAwesome
+              name="star"
+              size={16}
+              color={favorite ? '#000' : '#FFD02C'}
+            />
+            <S.TitleButton
+              style={{
+                color: favorite ? '#000' : '#FFD02C',
+              }}>
+              {favorite ? 'Desfavoritar' : 'Favoritar'}
+            </S.TitleButton>
+          </S.TouchableOpacity>
         )}
 
         <S.BoxFavorite>
@@ -101,7 +128,9 @@ const CardRepository: React.FC<CardRepositoryProps> = ({
 
         <S.BoxLanguage>
           <S.ColorLanguage />
-          <S.TextLanguage numberOfLines={1} ellipsizeMode='tail'>{language ? language : 'Linguagem Indisponivel'}</S.TextLanguage>
+          <S.TextLanguage numberOfLines={1} ellipsizeMode="tail">
+            {language ? language : 'Linguagem Indisponivel'}
+          </S.TextLanguage>
         </S.BoxLanguage>
       </S.FooterCard>
     </S.Container>
