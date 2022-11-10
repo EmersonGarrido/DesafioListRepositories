@@ -19,8 +19,8 @@ interface DetailsProps {
 }
 
 const Details: React.FC<DetailsProps> = ({ show, close }) => {
-  const [favorite, setFavorite] = useState(false);
-  const {user, favorites, handleUpdateFavorites} = useContext(UserContext);
+  const {user, favorites, handleUpdateFavorites, handleRemoveFavorites} =
+    useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [state, setState] = useState({
     opacity: new Animated.Value(0),
@@ -74,7 +74,11 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
   function handleFavorite() {
     setLoading(true);
-    handleUpdateFavorites(user.details);
+    if (user.details.favorite) {
+      handleRemoveFavorites(user.details);
+    } else {
+      handleUpdateFavorites(user.details);
+    }
     setLoading(false);
   }
 
@@ -85,24 +89,6 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
       closeModal();
     }
   }, [show]);
-
-  useEffect(() => {
-    const find = favorites.find(item => item.id === user.details.id);
-    if (find?.id === user.details.id) {
-      setFavorite(true);
-    } else {
-      setFavorite(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    const find = favorites.find(item => item.id === user.details.id);
-    if (find?.id === user.details.id) {
-      setFavorite(true);
-    } else {
-      setFavorite(false);
-    }
-  }, [favorites]);
 
   return (
     <Animated.View
@@ -171,13 +157,13 @@ const Details: React.FC<DetailsProps> = ({ show, close }) => {
 
           <S.ButtonFavorite
             style={{
-              border: favorite ? 0 : 0,
-              backgroundColor: favorite ? '#fff' : '#FFD02C',
+              border: user.details.favorite ? 0 : 0,
+              backgroundColor: user.details.favorite ? '#fff' : '#FFD02C',
             }}
             onPress={handleFavorite}
             disabled={loading}>
             <S.TitleButtonFavorite>
-              {favorite ? 'DESFAVORITAR' : 'FAVORITAR'}
+              {user.details.favorite ? 'DESFAVORITAR' : 'FAVORITAR'}
             </S.TitleButtonFavorite>
             <IconIonicons name="star" size={20} color="#000" />
           </S.ButtonFavorite>

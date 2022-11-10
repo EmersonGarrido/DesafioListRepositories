@@ -10,6 +10,7 @@ interface FavoriteProps {
   stargazersCount: number;
   language: string;
   htmlUrl: string;
+  favorite: boolean;
 }
 
 interface UserProps {
@@ -24,6 +25,7 @@ interface UserProps {
     stargazersCount: number;
     language: string;
     htmlUrl: string;
+    favorite: boolean;
   };
   modalConfig: boolean;
   loadingModalConfig: boolean;
@@ -36,6 +38,7 @@ interface UserContextProps {
   setUser: (user: UserProps) => void;
   favorites: FavoriteProps[];
   handleUpdateFavorites: (favorite: FavoriteProps) => void;
+  handleRemoveFavorites: (favorite: FavoriteProps) => void;
 }
 
 const UserContext = createContext<UserContextProps>({} as UserContextProps);
@@ -63,6 +66,7 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
       stargazersCount: 0,
       language: '',
       htmlUrl: '',
+      favorite: false,
     },
   };
 
@@ -75,6 +79,17 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
         ...Favorite,
       },
     ];
+    setFavorites([...saveFavorite]);
+
+    await AsyncStorage.setItem('@wefit-favorite', JSON.stringify(saveFavorite));
+  }
+
+  async function handleRemoveFavorites(Favorite: FavoriteProps) {
+    const resultFilterFavorites = favorites.filter(
+      item => item.id !== Favorite.id,
+    );
+
+    const saveFavorite = [...resultFilterFavorites];
     setFavorites([...saveFavorite]);
 
     await AsyncStorage.setItem('@wefit-favorite', JSON.stringify(saveFavorite));
@@ -98,6 +113,7 @@ export const UserProvider: React.FC<ReactProps> = ({children}) => {
         setUser,
         favorites,
         handleUpdateFavorites,
+        handleRemoveFavorites,
       }}>
       {children}
     </UserContext.Provider>
